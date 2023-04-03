@@ -346,6 +346,7 @@ class ArtNetServer(asyncio.DatagramProtocol):
                     for node in nodes:
                         ip_str = inet_ntoa(node.addr)
                         log.debug(f"Sending ArtDmx to {ip_str}")
+                        sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
                         sock.sendto(packet, (ip_str, ARTNET_PORT))
 
             if self._sequencing:
